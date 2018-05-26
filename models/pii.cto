@@ -26,6 +26,21 @@ concept Address {
   o String zip
 }
 
+concept ReadAccess {
+  o String fieldName
+  o DateTime accessExpiry
+}
+
+concept DocumentReadAccess {
+  o String DocumentName
+  o ReadAccess[] readAccess
+}
+
+concept DocumentFieldEntry {
+  o String key  // firstName
+  o String value // alice
+}
+
 participant Member identified by email {
   o String email
   o String firstName
@@ -33,6 +48,26 @@ participant Member identified by email {
   o DateTime dob optional
   o Address address optional
   o String[] authorized optional
+}
+
+participant Issuer identified by id {
+  o String id
+  o String email
+  o String firstName
+  o String lastName
+}
+
+participant ServiceProvider identified by id {
+  o String id
+  o String serviceName
+  o Address serviceAddress
+  o DocumentReadAccess[] docReadAccess
+}
+
+asset Document identified by id {
+  o String id // just some arbitrary number on auto-increment
+  o String documentType  // eg. passport
+  o DocumentFieldEntry[] fields  // key-value pairs
 }
 
 abstract transaction MemberTransaction {
