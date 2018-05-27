@@ -46,7 +46,8 @@ concept ReadAccess {
 }
 
 concept DocumentReadAccess {
-  o String DocumentName
+  o String documentType
+  o String documentOwner
   o ReadAccess[] readAccess
 }
 
