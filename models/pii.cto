@@ -26,6 +26,20 @@ concept Address {
   o String zip
 }
 
+enum NumericField {
+  o AGE
+  o HEIGHT
+  o WEIGHT
+}
+
+enum CompareOp {
+  o GT
+  o LT
+  o LEQ
+  o GEQ
+  o EQ
+}
+
 concept ReadAccess {
   o String fieldName
   o DateTime accessExpiry
@@ -39,6 +53,12 @@ concept DocumentReadAccess {
 concept DocumentFieldEntry {
   o String key  // firstName
   o String value // alice
+}
+
+concept Query {
+  o CompareOp op
+  o NumericField field
+  o Double operand
 }
 
 participant Member identified by email {
@@ -62,6 +82,7 @@ participant ServiceProvider identified by id {
   o String serviceName
   o Address serviceAddress
   o DocumentReadAccess[] docReadAccess
+  o Query[] authorizedQueries
 }
 
 asset Document identified by id {
